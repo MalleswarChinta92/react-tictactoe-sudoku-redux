@@ -5,15 +5,18 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
 
 import tictactoeReducer from './store/reducers/tictactoe'
+import sudokuReducer from './store/reducers/sudoku'
 
 const rootReducer = combineReducers({
-  tictactoe: tictactoeReducer
+  tictactoe: tictactoeReducer,
+  sudoku: sudokuReducer
 })
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const app = (
       <Provider store={store}>

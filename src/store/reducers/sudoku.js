@@ -1,13 +1,14 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const intialState = {
-    numbers:[[],[],[],[],[],[],[],[],[]],
-    loadedNumbers: [[],[],[],[],[],[],[],[],[]],
-    solution: [],
+    numbers: "015070000400800750008009016964107030082390500500004090020410800001703904000920065",
+    loadedNumbers: "015070000400800750008009016964107030082390500500004090020410800001703904000920065",
+    solution: "315672489496831752278549316964157238182396547537284691629415873851763924743928165",
     loading: false,
     invalid: false,
     markedIndex:-1,
-    wrongIndexes: []
+    wrongIndexes: [],
+    level: null
 }
 
 const userMarked = (state, action) => {
@@ -21,8 +22,6 @@ const userClicked = (state, action) => {
 
     const updatedNumbers = [...state.numbers];
     const clickedNumber = action.number;
-
-    updatedNumbers[]
 
     return {
         ...state,

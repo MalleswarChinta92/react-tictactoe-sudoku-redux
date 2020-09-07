@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import axios from 'axios';
 
 export const userMarked = (index) => {
     return {
@@ -29,5 +30,13 @@ export const userGaveUp = () => {
 export const sudokuReset = () => {
     return {
         type: actionTypes.SUDOKU_USER_RESET
+    }
+}
+
+export const userServerRequest = () => {
+    return dispatch => {
+        axios.get('https://react-tictactoe-sudoku-redux.firebaseio.com/sudoku.json').then(response => {
+            dispatch(userRequest())
+        })    
     }
 }

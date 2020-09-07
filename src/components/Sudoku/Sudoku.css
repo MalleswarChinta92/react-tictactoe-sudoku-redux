@@ -1,0 +1,11 @@
+.sudoku-container {
+    display: flex;
+    width: 450px;
+    flex-wrap:wrap;
+  }
+
+@media(min-width:768px) {
+    .sudoku-container {
+        width: 450px;
+      }
+}
