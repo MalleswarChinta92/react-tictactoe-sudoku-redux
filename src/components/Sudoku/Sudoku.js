@@ -8,15 +8,24 @@ const sudoku = (props) => {
     const grid = Array.from(props.numbers).map((number, index) => {
         const isLoaded = Array.from(props.loadedNumbers)[index] === '0' ? false : true
         if (number === '0') number = ''
-        const isMarked = index === props.markedIndex
-        return <SudokuGrid loaded={isLoaded} number={number} marked={isMarked} key={index}/>
+        const isMarked = index === props.marked
+        return <SudokuGrid loaded={isLoaded} number={number} 
+            marked={isMarked} key={index} clicked={() => props.userMarked(index)}/>
     })
 
+    const buttons = (
+        <div className="container">
+            <h3>Choose your level</h3>
+            <button type="button" className="btn btn-primary" onClick={() => props.requestServer("EASY")}>EASY</button>
+            <button type="button" className="btn btn-success" onClick={() => props.requestServer("MEDIUM")}>MEDIUM</button>
+            <button type="button" className="btn btn-secondary" onClick={() =>props.requestServer("HARD")}>HARD</button>
+            <button type="button" className="btn btn-danger" onClick={() => props.requestServer("EXPERT")}>EXPERT</button>        
+        </div>
+    )
 
     return (
         <div className="sudoku-container">
-            <button onClick={props.requestServer}>Request</button>
-            {grid}
+            {props.gameOn ? grid : buttons}
         </div>
     )
 }
@@ -26,13 +35,16 @@ const mapStateToProps = (state) => {
         numbers: state.sudoku.numbers,
         loadedNumbers: state.sudoku.loadedNumbers,
         solution: state.sudoku.solution,
-        marked : state.sudoku.markedIndex
+        marked : state.sudoku.markedIndex,
+        gameOn: state.sudoku.gameOn,
+        isLoading: state.sudoku.loading
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestServer: () => {dispatch(actions.userServerRequest())}
+        requestServer: (level) => {dispatch(actions.userServerRequest(level))},
+        userMarked: (index) => {console.log(index); dispatch(actions.userMarked(index))}
     }
 }
 

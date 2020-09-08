@@ -15,9 +15,10 @@ export const userClicked = (number) => {
     }
 }
 
-export const userRequest = (level) => {
+export const userRequest = (sudokuJson) => {
     return {
-        type: actionTypes.SUDOKU_USER_REQUEST
+        type: actionTypes.SUDOKU_USER_REQUEST,
+        sudokuJson
     }
 }
 
@@ -33,10 +34,14 @@ export const sudokuReset = () => {
     }
 }
 
-export const userServerRequest = () => {
+export const userServerRequest = (level) => {
     return dispatch => {
         axios.get('https://react-tictactoe-sudoku-redux.firebaseio.com/sudoku.json').then(response => {
-            dispatch(userRequest())
+            const data = response.data
+            const sudokuJson = data.find((json) => {
+                return json.level === level
+            })
+            dispatch(userRequest(sudokuJson))
         })    
     }
 }

@@ -2,6 +2,7 @@
     display: flex;
     width: 450px;
     flex-wrap:wrap;
+    margin:auto;
   }
 
 @media(min-width:768px) {

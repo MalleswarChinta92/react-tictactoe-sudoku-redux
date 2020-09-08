@@ -1,14 +1,15 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const intialState = {
-    numbers: "015070000400800750008009016964107030082390500500004090020410800001703904000920065",
-    loadedNumbers: "015070000400800750008009016964107030082390500500004090020410800001703904000920065",
-    solution: "315672489496831752278549316964157238182396547537284691629415873851763924743928165",
+    numbers: "",
+    loadedNumbers: "",
+    solution: "",
     loading: false,
     invalid: false,
     markedIndex:-1,
     wrongIndexes: [],
-    level: null
+    level: null,
+    gameOn: false
 }
 
 const userMarked = (state, action) => {
@@ -26,12 +27,20 @@ const userClicked = (state, action) => {
     return {
         ...state,
         numbers: [...state.numbers],
-
+        markedIndex: -1
     }
 }
 
-const userRequest = () => {
-
+const userRequest = (state, action) => {
+    return {
+        ...state,
+        numbers: action.sudokuJson.problem,
+        loadedNumbers: action.sudokuJson.problem,
+        solution: action.sudokuJson.solution,
+        gameOn: true,
+        level: action.sudokuJson.level,
+        loading: false
+    }
 }
 
 const reset = (state, action) => {
@@ -55,6 +64,8 @@ const reducer = (state = intialState, action) => {
             return userMarked(state,action);
         case actionTypes.SUDOKU_USER_RESET:
             return reset(state, action);
+        case actionTypes.SUDOKU_USER_REQUEST:
+            return userRequest(state,action);
         default:
             return state;
     }
